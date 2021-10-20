@@ -22,7 +22,7 @@ function App() {
   const Page500 = React.lazy(() => import('./components/coreUi/views/pages/page500/Page500'));
 
   return (
-    <HashRouter>
+    <HashRouter basename='/'>
       <React.Suspense fallback={loading}>
         <Switch>
           <Route exact path="/login" name="Login Page" render={props => <Login {...props} />} />
