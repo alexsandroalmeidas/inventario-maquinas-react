@@ -7,7 +7,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 let plugins = [
     new HtmlWebpackPlugin({
         filename: 'index.html',
-        template: path.join(__dirname, 'src', 'index.html')
+        template: path.join(__dirname, 'public', 'index.html')
     }),
     new ExtractTextPlugin('style.css')
 ]
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-    entry: path.join(__dirname, 'src', 'index.jsx'),
+    entry: path.join(__dirname, 'src', 'App.js'),
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'bundle.js'
