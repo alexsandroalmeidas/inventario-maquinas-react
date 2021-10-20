@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { icons } from '../src/components/coreUi/assets/icons';
+import { Provider } from 'react-redux';
+import store from './store'
+
+React.icons = icons;
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App/>
+  </Provider>,
   document.getElementById('root')
 );
 
