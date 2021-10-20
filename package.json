@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
-  "homepage": "https://alexsandroalmeidas.github.io/inventario-maquinas-react#index",
+  "homepage": "https://alexsandroalmeidas.github.io/inventario-maquinas-react",
   "dependencies": {
     "@coreui/chartjs": "^2.0.0",
     "@coreui/coreui": "^3.4.0",
