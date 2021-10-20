@@ -19,9 +19,7 @@
     "bootstrap": "^5.1.3",
     "classnames": "^2.2.6",
     "core-js": "^3.9.1",
-    "css-loader": "^6.4.0",
     "enzyme": "^3.11.0",
-    "nodemon": "^2.0.14",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
@@ -31,38 +29,16 @@
     "react-scripts": "4.0.3",
     "redux": "^4.0.5",
     "sass": "^1.32.8",
-    "webpack-shell-plugin-next": "^2.2.2",
-    "win-node-env": "^0.4.0"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.15.8",
-    "@babel/preset-react": "^7.14.5",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.2.2",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "cross-env": "^7.0.3",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^6.2.0",
-    "gh-pages": "^3.2.3",
-    "html-webpack-plugin": "^5.4.0",
-    "style-loader": "^3.3.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "web-vitals": "^1.1.2",
-    "webpack": "^5.59.0",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.3.1"
+    "gh-pages": "^3.2.3"
   },
   "scripts": {
-    "start": "SET NODE_ENV=development && nodemon node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "build": "NODE_ENV=production node_modules/webpack/bin/webpack.js",
-    "dev": "react-scripts start",
-    "build-dev": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build && mv build docs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
