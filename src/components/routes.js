@@ -48,7 +48,7 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/cadastro/listagemPerfis', name: 'Perfis', component: ListagemPerfis, exact: true },
   { path: '/cadastro/listagemUsuarios', name: 'Usuários', component: ListagemUsuarios, exact: true },
-  { path: '/cadastro/listagemClientes', name: 'Cliente', component: ListagemClientes, exact: true },  
+  { path: '/cadastro/listagemClientes', name: 'Clientes', component: ListagemClientes, exact: true },  
   { path: '/cadastro/parametros', name: 'Parâmetros', component: Parametros, exact: true },
   // { path: '/base', name: 'Base', component: Cards, exact: true },
   // { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },

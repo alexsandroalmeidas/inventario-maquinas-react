@@ -90,7 +90,7 @@ const Parametros = () => {
                         </CCardBody>
 
                         <CCardFooter>
-                            <CButton type="submit" size="sm" color="success">Salvar</CButton>
+                            <CButton shape="pill" type="submit" size="sm" color="success">Salvar</CButton>
                             &nbsp;
                             <CButton type="reset" size="sm" color="danger">Cancelar</CButton>
                         </CCardFooter>
