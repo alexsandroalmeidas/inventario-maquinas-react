@@ -33,7 +33,7 @@ const TheSidebar = () => {
             <CIcon name="logo"
               height="80"
               alt="Logo"
-              src={'logos/logo_tino.JPG'} />
+              src={'./logos/logo_tino.jpg'} />
           </div>
         </div>
       </CSidebarBrand>
