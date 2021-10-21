@@ -13,15 +13,65 @@ const _nav = [
     _children: [
       {
         _tag: 'CSidebarNavItem',
+        name: 'Perfis',
+        to: '/cadastro/listagemPerfis',
+        // icon: 'cil-user-follow',
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Clientes',
+        to: '/cadastro/listagemClientes',
+        // icon: 'cil-user',
+      },
+      {
+        _tag: 'CSidebarNavItem',
         name: 'Usuários',
-        to: '/base/usuario',
-        icon: 'cil-user',
+        to: '/cadastro/listagemUsuarios',
+        // icon: 'cil-people',
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Parâmetros',
-        to: '/base/parametros',
-        icon: 'cil-task'
+        to: '/cadastro/parametros',
+        // icon: 'cil-task'
+      },
+    ],
+  },
+  {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Cliente',
+    route: '/cliente',
+    icon: 'cil-user',
+    _children: [
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Importação Clientes',
+        to: '/cadastro/importacaoClientes',
+        // icon: 'cil-user-follow',
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Consulta',
+        to: '/cadastro/listagemClientes',
+        // icon: 'cil-user',
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Consulta HW e SF',
+        to: '/cadastro/listagemUsuarios',
+        // icon: 'cil-people',
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Consulta Automação/Módulo',
+        to: '/cadastro/parametros',
+        // icon: 'cil-task'
+      },
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Consulta Arquivos Log',
+        to: '/cadastro/parametros',
+        // icon: 'cil-task'
       },
     ],
   },

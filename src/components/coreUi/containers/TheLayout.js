@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   TheContent,
   TheSidebar,
@@ -22,4 +22,4 @@ const TheLayout = () => {
   )
 }
 
-export default TheLayout
+export default TheLayout;

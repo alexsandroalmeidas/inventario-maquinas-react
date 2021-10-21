@@ -13,6 +13,8 @@ import {
   CImg,
 } from '@coreui/react';
 
+import CIcon from '@coreui/icons-react';
+
 // sidebar nav config
 import navigation from './_nav';
 
@@ -28,12 +30,10 @@ const TheSidebar = () => {
       <CSidebarBrand className="d-md-down-none" to="/">
         <div className="pt-3 mr-3 float-left">
           <div className="c-avatar">
-            <CImg
-              src={'logos/logo_tino.jpg'}
-              className="c-sidebar-brand-full"
-              height={80}
-              width={1500}
-            />
+            <CIcon name="logo"
+              height="80"
+              alt="Logo"
+              src={'logos/logo_tino.JPG'} />
           </div>
         </div>
       </CSidebarBrand>
