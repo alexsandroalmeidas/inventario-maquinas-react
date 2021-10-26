@@ -1792,6 +1792,7 @@ div.dt-button-info {
 .img-logo {
   border-radius: 14%;
   height: 5rem;
+  padding-left: 2rem;
 }
 
 .img-logo-small {
