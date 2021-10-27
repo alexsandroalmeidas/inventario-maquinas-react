@@ -18,8 +18,8 @@ const Routes = () => {
             <Route path="/cadastroClientes" component={ClientesListagem} />
             <Route path="/cadastroUsuarios" component={UsuariosListagem} />
             <Route path="/cadastroParametros" component={ParametrosListagem} />
-            <Route path="/componentesForm" component={Grids} />
-            <Route path="/componentesGrid" component={Form} />
+            <Route path="/componentesForm" component={Form} />
+            <Route path="/componentesGrid" component={Grids} />
             {/* <Route path="*" component={Home} /> */}
         </Switch>
     );
