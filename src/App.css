@@ -72,7 +72,7 @@ h5 {
 }
 .nav.metismenu > li {
   display: block;
-  width: 100%;
+  /* width: 100%; */
   position: relative;
 }
 .nav.metismenu .dropdown-menu > li > a {

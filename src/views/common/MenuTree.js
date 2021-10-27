@@ -40,7 +40,7 @@ const MenuTree = (props) => {
         <>
             <Fragment>
 
-                <li>
+                <li className={open ? 'active' : ''}>
                     <button
                         title={props.label}
                         type="button"

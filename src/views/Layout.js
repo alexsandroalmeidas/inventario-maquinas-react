@@ -4,6 +4,7 @@ import Sidebar from './common/Sidebar';
 import Footer from "./common/Footer";
 import Routes from "./common/Routes";
 import { BrowserRouter } from 'react-router-dom';
+import 'pace-js';
 
 function Layout() {
 
