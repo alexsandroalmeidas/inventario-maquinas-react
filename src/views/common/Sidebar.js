@@ -48,6 +48,10 @@ const Sidebar = (props) => {
                             <MenuItem path="/relatorio1" label="Relatório 1" />
                             <MenuItem path="/relatorio2" label="Relatório 2" />
                         </MenuTree>
+                        <MenuTree miniNavBarOpen={props.miniNavBarOpen} icon={faCogs} path="/componentes" label="Componentes">
+                            <MenuItem path="/componentesForm" label="Form" />
+                            <MenuItem path="/componentesGrid" label="Grid" />
+                        </MenuTree>
                     </ul>
                 </div>
             </nav>

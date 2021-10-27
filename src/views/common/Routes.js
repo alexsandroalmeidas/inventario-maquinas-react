@@ -6,6 +6,8 @@ import Dashboard from "../dashboards/Dashboard";
 import ParametrosListagem from "../parametros/ParametrosListagem";
 import PerfisListagem from "../perfis/PerfisListagem";
 import UsuariosListagem from "../usuarios/UsuariosListagem";
+import Grids from "./Grids";
+import Form from "./Form";
 
 const Routes = () => {
     return (
@@ -16,6 +18,8 @@ const Routes = () => {
             <Route path="/cadastroClientes" component={ClientesListagem} />
             <Route path="/cadastroUsuarios" component={UsuariosListagem} />
             <Route path="/cadastroParametros" component={ParametrosListagem} />
+            <Route path="/componentesForm" component={Grids} />
+            <Route path="/componentesGrid" component={Form} />
             {/* <Route path="*" component={Home} /> */}
         </Switch>
     );
