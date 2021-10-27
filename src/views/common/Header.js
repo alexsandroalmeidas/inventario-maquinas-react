@@ -8,15 +8,14 @@ const Header = ({ toggleNavigation }) => {
     return (
 
         <div className="row border-bottom">
-            <nav className="navbar navbar-static-top" role="navigation" style={{ marginBottom: 0}}>
+            <nav className="navbar navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
                 <div className="navbar-header">
-                    <a className="navbar-minimalize minimalize-styl-2 btn btn-primary"
-                        onClick={(e) => toggleNavigation(e)}
-                        href="#">
+                    <button className="navbar-minimalize minimalize-styl-2 btn btn-primary"
+                        onClick={(e) => toggleNavigation(e)}>
                         <FontAwesomeIcon
                             icon={faBars}
                         ></FontAwesomeIcon>
-                    </a>
+                    </button>
                 </div>
                 <ul className="nav navbar-top-links navbar-right">
                     <li style={{ float: 'right' }}>

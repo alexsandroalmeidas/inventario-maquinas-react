@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
 import Content from "../common/Content";
 import PageHeader from "../common/PageHeader";
 
@@ -10,7 +9,7 @@ function ClientesListagem(props) {
             <Content>
                 <div className="row">
                     <div className="col-lg-12">
-                        <div className="text-center m-t-lg">
+                        <div className="text-center">
                             <h1>
                                 Página Clientes
                             </h1>
