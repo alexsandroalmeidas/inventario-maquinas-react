@@ -2,10 +2,10 @@ import React from "react";
 import Content from "./Content";
 import PageHeader from "./PageHeader";
 
-function Form(props) {
+const Form = (props) => {
     return (
         <>
-            <PageHeader parentTitle="Componentes" title="Form" />
+            <PageHeader beforeBreadcrumb="Componentes" title="Form" />
             <Content>
 
                 <div className="row">

@@ -5,7 +5,7 @@ import PageHeader from "../common/PageHeader";
 function ParametrosListagem(props) {
     return (
         <>
-            <PageHeader parentTitle="Cadastros" title="Parâmetros" />
+            <PageHeader beforeBreadcrumb="Cadastros" title="Parâmetros" />
             <Content>
                 <div className="row">
                     <div className="col-lg-12">

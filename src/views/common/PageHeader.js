@@ -3,19 +3,21 @@ import { Link } from 'react-router-dom';
 
 const PageHeader = (props) => {
 
+    const { beforeBreadcrumb, title, children } = props;
+
     const parentBreadcrumbItem = () => {
-        return !!props.parentTitle && (<li className="breadcrumb-item">{props.parentTitle}</li>);
+        return !!beforeBreadcrumb && (<li className="breadcrumb-item">{beforeBreadcrumb}</li>);
     }
 
     const activeBreadcrumbItem = () => {
-        return !!props.title && (<li className="breadcrumb-item active"><strong>{props.title}</strong></li>);
+        return !!title && (<li className="breadcrumb-item active"><strong>{title}</strong></li>);
     }
 
     return (
 
         <div className="row wrapper border-bottom white-bg page-heading">
             <div className="col-lg-10">
-                <h1 {...props}>{props.children}</h1>
+                <h1>{children}</h1>
                 <ol className="breadcrumb">
                     <li className="breadcrumb-item">
                         <Link to="/">Home</Link>
@@ -26,7 +28,7 @@ const PageHeader = (props) => {
             </div>
             <div className="col-lg-2">
                 <div className="title-action">
-                    {props.children}
+                    {children}
                 </div>
             </div>
         </div>

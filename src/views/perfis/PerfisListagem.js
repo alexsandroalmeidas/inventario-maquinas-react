@@ -5,7 +5,7 @@ import PageHeader from "../common/PageHeader";
 function PerfisListagem(props) {
     return (
         <>
-            <PageHeader parentTitle="Cadastros" title="Perfis" />
+            <PageHeader beforeBreadcrumb="Cadastros" title="Perfis" />
             <Content>
                 <div className="row">
                     <div className="col-lg-12">

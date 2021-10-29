@@ -1,18 +1,24 @@
 import React, { Fragment, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import  '@fortawesome/free-solid-svg-icons';
+import {
+    faAngleLeft,
+    faAngleDown
+} from '@fortawesome/free-solid-svg-icons';
 
 const MenuTree = (props) => {
 
     const [open, setOpen] = useState(false);
 
-    const handleClick = (event) => {
+    const { miniNavBarOpen, icon, label, children } = props;
+
+    const handleClick = () => {
         setOpen(!open);
     };
 
     const buttonRight = () => {
 
-        if (!props.miniNavBarOpen) {
+        if (!miniNavBarOpen) {
             if (open) {
                 return (
                     <FontAwesomeIcon
@@ -41,20 +47,20 @@ const MenuTree = (props) => {
 
                 <li className={open ? 'active' : ''}>
                     <button
-                        title={props.label}
+                        title={label}
                         type="button"
                         className="btnMenu"
                         style={{ cursor: 'pointer' }}
                         onClick={() => handleClick()}>
 
                         <FontAwesomeIcon
-                            icon={props.icon}
+                            icon={icon}
                             style={{
                                 marginRight: '6px'
                             }}
                         ></FontAwesomeIcon>
                         <span className="nav-label">
-                            {props.label}
+                            {label}
                         </span>
                         {buttonRight()}
                     </button>
@@ -75,7 +81,7 @@ const MenuTree = (props) => {
                     </Link> */}
 
                     <ul className={open ? 'nav nav-second-level' : 'nav nav-second-level collapse'}>
-                        {props.children}
+                        {children}
                     </ul>
 
                 </li>

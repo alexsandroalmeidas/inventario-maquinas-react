@@ -6,7 +6,7 @@ function UsuariosListagem(props) {
 
     return (
         <>
-            <PageHeader parentTitle="Cadastros" title="Usuários" />
+            <PageHeader beforeBreadcrumb="Cadastros" title="Usuários" />
             <Content>
                 <div className="row">
                     <div className="col-lg-12">

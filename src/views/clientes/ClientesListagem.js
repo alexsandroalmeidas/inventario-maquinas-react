@@ -5,7 +5,7 @@ import PageHeader from "../common/PageHeader";
 function ClientesListagem(props) {
     return (
         <>
-            <PageHeader parentTitle="Cadastros" title="Clientes" />
+            <PageHeader beforeBreadcrumb="Cadastros" title="Clientes" />
             <Content>
                 <div className="row">
                     <div className="col-lg-12">

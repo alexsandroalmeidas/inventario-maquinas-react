@@ -1,10 +1,6 @@
 import React from 'react';
 import { HashRouter } from 'react-router-dom';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-
-
 function App() {
 
   const loading = (
