@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import  '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/free-solid-svg-icons';
 import {
     faAngleLeft,
     faAngleDown

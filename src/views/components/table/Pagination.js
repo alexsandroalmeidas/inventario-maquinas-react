@@ -4,6 +4,7 @@ import { usePagination, DOTS } from './usePagination';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+
 const Styles = styled.div`
     .pagination-right{
         float: right !important;
@@ -88,6 +89,7 @@ const Pagination = props => {
     };
 
     let lastPage = paginationRange[paginationRange.length - 1];
+
     return (
         <Styles>
             <ul className="pagination pull-right pagination-right">
@@ -101,7 +103,7 @@ const Pagination = props => {
                 </li>
                 {paginationRange.map(pageNumber => {
                     if (pageNumber === DOTS)
-                        return <li className="pagination-item dots">&#8230;</li>;
+                        return <li key={pageNumber} className="pagination-item dots">&#8230;</li>;
 
                     return (
                         <li key={pageNumber}

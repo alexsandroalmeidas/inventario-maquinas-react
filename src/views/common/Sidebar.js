@@ -13,6 +13,15 @@ import smallLogo from '../../assets/img/logo_tino_ico_transparent.ico';
 
 const Sidebar = (props) => {
 
+    // const menuList = [
+    //     {
+    //         icon: faChartLine,
+    //         path: "/dashboard",
+    //         navLabel: true,
+    //         label="Dashboard",
+    //     },
+    // ];
+
     return (
         <>
             <nav className="navbar-default navbar-static-side" role="navigation" >
@@ -20,17 +29,18 @@ const Sidebar = (props) => {
                     <ul className="nav metismenu" id="side-menu" style={{ zIndex: 2000 }}>
                         <li className="nav-header">
                             <div className="dropdown profile-element">
-                                <img className="img-logo" src={largeLogo} alt={'logo'}/>
+                                <img className="img-logo" src={largeLogo} alt={'logo'} />
                                 {/* <a data-toggle="dropdown" className="dropdown-toggle" href="#">
                                     <span className="block m-t-xs font-bold">David Williams</span>
                                     <span className="text-muted text-xs block">Art Director <b className="caret"></b></span>
                                 </a> */}
                             </div>
                             <div className="logo-element">
-                                <img className="img-logo-small" src={smallLogo} alt={'small logo'}/>
+                                <img className="img-logo-small" src={smallLogo} alt={'small logo'} />
                             </div>
                         </li>
                         {/* menu */}
+
                         <MenuItem icon={faChartLine} path="/dashboard" navLabel={true} label="Dashboard" />
                         <MenuTree miniNavBarOpen={props.miniNavBarOpen} icon={faCogs} path="/cadastros" label="Cadastros">
                             <MenuItem path="/cadastroPerfis" label="Perfis" />
