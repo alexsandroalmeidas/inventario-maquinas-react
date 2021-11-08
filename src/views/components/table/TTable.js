@@ -1,5 +1,4 @@
-import React,
-{
+import React, {
     useEffect,
     useState,
     useCallback,
@@ -7,13 +6,20 @@ import React,
     useMemo,
     Fragment
 } from 'react';
-import { useTable, useSortBy, usePagination } from 'react-table';
-import 'footable/css/footable.core.min.css';
+import {
+    useTable,
+    useSortBy,
+    useFilters,
+    useGlobalFilter,
+    usePagination,
+    useAsyncDebounce
+} from 'react-table';
+
+import '../../../plugins/footable/footable.core.css';
 
 import styled from 'styled-components';
 import Pagination from './Pagination';
-
-let PageSize = 10;
+import GlobalFilter from './GlobalFilter';
 
 const Styles = styled.div`
     .pagination-right{
@@ -25,6 +31,10 @@ const Styles = styled.div`
         border-color: #1ab394 !important;
         color: white !important;
     }
+
+    .table>:not(caption)>*>* {
+        border-bottom: none !important;
+    }      
 `;
 
 const TTable = ({
@@ -32,14 +42,52 @@ const TTable = ({
     serverData
 }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [data, setData] = useState(serverData);
+    const [data, setData] = useState([]);
     const [dataSorted, setDataSorted] = useState(serverData);
     const [loading, setLoading] = useState(false);
     const [pgCount, setPageCount] = useState(0);
-
+    // const fetchIdRef = useRef(0);
     const sortIdRef = useRef(0);
+    const skipPageResetRef = useRef();
 
-    const handleSort = useCallback(({ sortBy }) => {
+    const updateData = newData => {
+        // When data gets updated with this function, set a flag
+        // to disable all of the auto resetting
+        skipPageResetRef.current = true
+
+        debugger;
+        setData(newData);
+    }
+
+    // const onFetchData = useCallback(({ pageSize, pageIndex }) => {
+    //     // This will get called when the table needs new data
+    //     // You could fetch your data from literally anywhere,
+    //     // even a server. But for this example, we'll just fake it.
+
+    //     // Give this fetch an ID
+    //     const fetchId = ++fetchIdRef.current
+
+    //     // Set the loading state
+    //     setLoading(true)
+
+    //     // We'll even set a delay to simulate a server here
+    //     setTimeout(() => {
+    //         // Only update the data if this is the latest fetch
+    //         if (fetchId === fetchIdRef.current) {
+    //             // const startRow = pageSize * pageIndex
+    //             // const endRow = startRow + pageSize
+    //             setData(serverData);
+
+    //             // Your server could send back total page count.
+    //             // For now we'll just fake it, too
+    //             setPageCount(Math.ceil(dataSorted.length / pageSize))
+
+    //             setLoading(false)
+    //         }
+    //     }, 1000)
+    // }, [])
+
+    const handleSort = useCallback(({ sortBy, pageSize }) => {
 
         // Give this sort an ID
         const sortId = ++sortIdRef.current;
@@ -62,52 +110,60 @@ const TTable = ({
                 });
                 setDataSorted(sorted);
 
-                const firstPageIndex = (currentPage - 1) * PageSize;
-                const lastPageIndex = firstPageIndex + PageSize;
+                const firstPageIndex = (currentPage - 1) * pageSize;
+                const lastPageIndex = firstPageIndex + pageSize;
                 setData(sorted.slice(firstPageIndex, lastPageIndex));
 
                 console.log(dataSorted.slice(0, 10));
-                setLoading(false);               
+                setLoading(false);
             }
         }, 100);
     }, [currentPage]);
 
     const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        prepareRow,
-        page,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
-        gotoPage,
-        nextPage,
-        previousPage,
-        setPageSize,
-        visibleColumns,
-        pageCount,
-        state: { pageIndex, pageSize, sortBy }
+        getTableProps
+        , getTableBodyProps
+        , headerGroups
+        , prepareRow
+        , page
+        , gotoPage
+        , state: { pageIndex, pageSize, sortBy, globalFilter, filters }
+        , visibleColumns
+        , preGlobalFilteredRows
+        , setGlobalFilter,
     } = useTable(
         {
             columns,
             data,
             manualPagination: true,
-            initialState: { pageIndex: 0 },
+            pageCount: pgCount,
             manualSortBy: true,
             autoResetPage: false,
+            autoResetExpanded: false,
+            autoResetGroupBy: false,
+            autoResetSelectedRows: false,
             autoResetSortBy: false,
-            pageSize: PageSize,
-            pageCount: pgCount
+            autoResetFilters: false,
+            autoResetRowState: false
         },
+        useFilters,
+        useGlobalFilter,
         useSortBy,
         usePagination
     );
 
+    // const onFetchDataDebounced = useAsyncDebounce(onFetchData, 100);
+
+    // useEffect(() => {
+    //     // After the table has updated, always remove the flag
+    //     skipPageResetRef.current = false
+    // });
+
     useEffect(() => {
         gotoPage(1);
-        handleSort({ sortBy });
-    }, [handleSort, sortBy]);
+        handleSort({ sortBy, pageSize });
+        skipPageResetRef.current = false;
+    }, [handleSort, pageIndex, pageSize, sortBy, gotoPage]);
 
     useMemo(() => {
         const firstPageIndex = (currentPage - 1) * pageSize;
@@ -115,240 +171,112 @@ const TTable = ({
         setData(dataSorted.slice(firstPageIndex, lastPageIndex));
     }, [currentPage, dataSorted, pageSize]);
 
+    // We don't want to render all of the rows for this example, so cap
+    // it for this use case
+    const firstPageRows = page.slice(0, 10);
+
     return (
         <>
             <Fragment>
                 <Styles>
-                    <table className="footable table table-stripped default footable-loaded" {...getTableProps()}>
-                        <thead>
-                            {headerGroups.map((headerGroup) => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column) => (
-                                        // Add the sorting props to control sorting. For this example
-                                        // we can add them into the header props
-                                        <th {...column.getHeaderProps(column.getSortByToggleProps())} data-toggle="true">
-                                            {column.render("Header")}
+                    <div className="ibox-content">
 
-                                            {/* Add a sort direction indicator */}
-                                            {column.isSorted ? <span className="footable-sort-indicator"></span> : ''}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {page.map((row, i) => {
-                                prepareRow(row);
-                                return (
-                                    <tr {...row.getRowProps()}>
-                                        {row.cells.map((cell) => {
-                                            return (
-                                                <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                                            );
-                                        })}
+                        {/* <GlobalFilter
+                            preGlobalFilteredRows={preGlobalFilteredRows}
+                            globalFilter={globalFilter}
+                            setGlobalFilter={setGlobalFilter}
+                            setPageCount={setPageCount}
+                            setCurrentPage={setCurrentPage}
+                            data={data}
+                            handleSetData={dataSorted}
+                        /> */}
+
+                        <table className="footable table table-stripped footable-loaded default" {...getTableProps()}>
+                            <thead>
+                                {headerGroups.map((headerGroup) => (
+                                    <tr {...headerGroup.getHeaderGroupProps()}>
+                                        {headerGroup.headers.map((column) => (
+                                            // Add the sorting props to control sorting. For this example
+                                            // we can add them into the header props
+                                            <th {...column.getHeaderProps(column.getSortByToggleProps())}
+                                                className="footable-visible footable-sortable footable-sort-indicator">
+                                                {column.render("Header")}
+
+                                                {/* Add a sort direction indicator */}
+                                                {column.isSorted ? <span className="footable-sort-indicator"></span> : ''}
+                                                {/* <div>{column.canFilter ? column.render('Filter') : null}</div> */}
+                                            </th>
+                                        ))}
                                     </tr>
-                                );
-                            })}
-                            <tr>
-                                {loading ? (
-                                    // Use our custom loading state to show a loading indicator
-                                    <td colSpan="10000">Loading...</td>
-                                ) : (
-                                    <td colSpan="10000">
-                                        Showing {page.length} of ~{pgCount * pageSize}{" "}
-                                        results
+                                ))}
+                                {/* <tr>
+                                    <th
+                                        colSpan={visibleColumns.length}
+                                        style={{ textAlign: 'left', }}
+                                    >
+                                        <GlobalFilter
+                                            preGlobalFilteredRows={preGlobalFilteredRows}
+                                            globalFilter={globalFilter}
+                                            setGlobalFilter={setGlobalFilter}
+                                        />
+                                    </th>
+                                </tr> */}
+                            </thead>
+                            <tbody {...getTableBodyProps()}>
+                                {firstPageRows.map((row, i) => {
+                                    prepareRow(row)
+                                    return (
+                                        <tr {...row.getRowProps()}>
+                                            {row.cells.map(cell => {
+                                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                            })}
+                                        </tr>
+                                    )
+                                })}
+                                {/* 
+                                {page.map((row, i) => {
+                                    prepareRow(row);
+
+                                    return (
+                                        <tr {...row.getRowProps()}>
+                                            {row.cells.map((cell) => {
+                                                return (
+                                                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                                                );
+                                            })}
+                                        </tr>
+                                    );
+                                })} */}
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan={visibleColumns.length}>
+                                        <Pagination
+                                            className="pagination-bar"
+                                            currentPage={currentPage}
+                                            totalCount={dataSorted.length}
+                                            pageSize={pageSize}
+                                            onPageChange={page => setCurrentPage(page)}
+
+                                        />
                                     </td>
-                                )}
-                            </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </tfoot>
+                        </table>
 
-
-                    <Pagination
-                        className="pagination-bar"
-                        currentPage={currentPage}
-                        totalCount={serverData.length}
-                        pageSize={pageSize}
-                        onPageChange={page => setCurrentPage(page)}
-                    />
-
-
-
-
-
-                    {/* <div className="pagination">
-                    <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                        {"<<"}
-                    </button>{" "}
-                    <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                        {"<"}
-                    </button>{" "}
-                    <button onClick={() => nextPage()} disabled={!canNextPage}>
-                        {">"}
-                    </button>{" "}
-                    <button onClick={() => gotoPage(controlledPageCount - 1)} disabled={!canNextPage}>
-                        {">>"}
-                    </button>{" "}
-                    <span>
-                        Page{" "}
-                        <strong>
-                            {pageIndex + 1} of {pageOptions.length}
-                        </strong>{" "}
-                    </span>
-                    <span>
-                        | Go to page:{" "}
-                        <input
-                            type="number"
-                            defaultValue={pageIndex + 1}
-                            onChange={(e) => {
-                                const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                                gotoPage(page);
-                            }}
-                            style={{ width: "100px" }}
-                        />
-                    </span>{" "}
-                    <select
-                        value={pageSize}
-                        onChange={(e) => {
-                            setPageSize(Number(e.target.value));
-                        }}
-                    >
-                        {[10, 20, 30, 40, 50].map((pageSize) => (
-                            <option key={pageSize} value={pageSize}>
-                                Show {pageSize}
-                            </option>
-                        ))}
-                    </select>
-                </div> */}
-
+                        {/* <br />
+                        <div>Showing the first 10 results of {page.length} rows</div>
+                        <div>
+                            <pre>
+                                <code>{JSON.stringify(filters, null, 2)}</code>
+                            </pre>
+                        </div> */}
+                    </div>
                 </Styles>
 
             </Fragment>
         </>);
-
-    // return (
-    //     <Styles>
-    //         {/* <pre>
-    //             <code>
-    //                 {JSON.stringify(
-    //                     {
-    //                         pageIndex,
-    //                         pageSize,
-    //                         pageCount,
-    //                         canNextPage,
-    //                         canPreviousPage,
-    //                     },
-    //                     null,
-    //                     2
-    //                 )}
-    //             </code>
-    //         </pre> */}
-
-    //         <div className="ibox-content">
-    //             {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} /> */}
-    //             <table className="footable table table-stripped default footable-loaded" data-page-size="8" {...getTableProps()}>
-    //                 <thead>
-    //                     {headerGroups.map(headerGroup => (
-    //                         <tr {...headerGroup.getHeaderGroupProps()}>
-    //                             {headerGroup.headers.map(column => (
-    //                                 // Add the sorting props to control sorting. For this example
-    //                                 // we can add them into the header props
-    //                                 <th className="footable-visible footable-sortable footable-sort-indicator"
-    //                                     {...column.getHeaderProps(column.getSortByToggleProps())}>
-    //                                     {column.render('Header')}
-    //                                     {/* Add a sort direction indicator */}
-    //                                     {column.isSorted ? <span className="footable-sort-indicator"></span> : ''}
-    //                                 </th>
-    //                             ))}
-    //                         </tr>
-    //                     ))}
-    //                 </thead>
-    //                 <tbody {...getTableBodyProps()}>
-    //                     {page.map((row, i) => {
-    //                         prepareRow(row)
-    //                         return (
-    //                             <tr {...row.getRowProps()}>
-    //                                 {row.cells.map(cell => {
-    //                                     return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-    //                                 })}
-    //                             </tr>
-    //                         )
-    //                     })}
-
-    //                     {/* <tr>
-    //                     <td colSpan="10000">
-    //                         Showing {page.length} of ~{pageCount * pageSize}{' '}
-    //                         results
-    //                     </td>
-    //                 </tr> */}
-    //                 </tbody>
-    //                 <tfoot>
-    //                     <tr>
-    //                         <td colSpan={headerGroups.map(headerGroup => headerGroup.headers.length)}>
-    //                             <ul className="pagination pull-right pagination-right">
-    //                                 <li className="footable-page-arrow disabled">
-    //                                     <Link data-page="first" to="#first" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-    //                                         «
-    //                                     </Link>
-    //                                 </li>
-    //                                 <li className={!canPreviousPage ? 'footable-page-arrow disabled' : 'footable-page-arrow'}>
-    //                                     <Link data-page="prev" to="#prev" onClick={() => previousPage()} disabled={!canPreviousPage}>
-    //                                         ‹
-    //                                     </Link>
-    //                                 </li>
-    //                                 {/* {rows.map(row => {
-    //                                 prepareRow(row)
-    //                                 return (
-    //                                     <tr {...row.getRowProps()}>
-    //                                         {row.cells.map(cell => {
-    //                                             return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-    //                                         })}
-    //                                     </tr>
-    //                                 )
-    //                             })} */}
-    //                                 <li className={!canNextPage ? 'footable-page disabled' : 'footable-page'}>
-    //                                     <Link data-page="0" to="#" onClick={() => gotoPage(0)} disabled={!canNextPage}>
-    //                                         1
-    //                                     </Link>
-    //                                 </li>
-    //                                 <li className={!canNextPage ? 'footable-page disabled' : 'footable-page'}>
-    //                                     <Link data-page="1" to="#" onClick={() => gotoPage(1)} disabled={!canNextPage}>
-    //                                         2
-    //                                     </Link>
-    //                                 </li>
-    //                                 <li className={!canNextPage ? 'footable-page disabled' : 'footable-page'}>
-    //                                     <Link data-page="2" to="#" onClick={() => gotoPage(2)} disabled={!canNextPage}>
-    //                                         3
-    //                                     </Link>
-    //                                 </li>
-    //                                 <li className={!canNextPage ? 'footable-page disabled' : 'footable-page'}>
-    //                                     <Link data-page="3" to="#" onClick={() => gotoPage(3)} disabled={!canNextPage}>
-    //                                         4
-    //                                     </Link>
-    //                                 </li>
-    //                                 <li className={!canNextPage ? 'footable-page disabled' : 'footable-page'}>
-    //                                     <Link data-page="4" to="#" onClick={() => gotoPage(4)} disabled={!canNextPage}>
-    //                                         5
-    //                                     </Link>
-    //                                 </li>
-    //                                 <li className="footable-page-arrow">
-    //                                     <Link data-page="next" to="#next" onClick={() => nextPage()} disabled={!canNextPage}>
-    //                                         ›
-    //                                     </Link>
-    //                                 </li>
-    //                                 <li className="footable-page-arrow">
-    //                                     <Link data-page="last" to="#last" onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-    //                                         »
-    //                                     </Link>
-    //                                 </li>
-    //                             </ul>
-    //                         </td>
-    //                     </tr>
-    //                 </tfoot>
-    //             </table >
-    //         </div>
-    //     </Styles>
-    // );
 }
 
 export default TTable;

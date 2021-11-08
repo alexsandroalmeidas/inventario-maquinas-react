@@ -20,6 +20,7 @@
     "classnames": "^2.3.1",
     "footable": "^2.0.6",
     "gh-pages": "^3.2.3",
+    "match-sorter": "^6.3.1",
     "metismenu": "^3.0.7",
     "namor": "^1.1.2",
     "pace-js": "^1.2.3",

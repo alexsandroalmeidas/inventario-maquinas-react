@@ -4,7 +4,7 @@ import PageHeader from "../common/PageHeader";
 import TTable from "../components/table/TTable";
 import makeData from '../components/table/makeData';
 
-const serverData = makeData(10000);
+const serverData = makeData(1000);
 
 const Grids = (props) => {
     const columns = useMemo(
@@ -16,6 +16,7 @@ const Grids = (props) => {
             {
                 Header: 'Last Name',
                 accessor: 'lastName',
+                filter: 'fuzzyText',
             },
             {
                 Header: 'Age',
