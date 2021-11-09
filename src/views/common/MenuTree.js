@@ -5,6 +5,8 @@ import {
     faAngleLeft,
     faAngleDown
 } from '@fortawesome/free-solid-svg-icons';
+import Button from '../components/buttons/Button';
+
 
 const MenuTree = (props) => {
 
@@ -46,7 +48,7 @@ const MenuTree = (props) => {
             <Fragment>
 
                 <li className={open ? 'active' : ''}>
-                    <button
+                    <Button
                         title={label}
                         type="button"
                         className="btnMenu"
@@ -63,7 +65,7 @@ const MenuTree = (props) => {
                             {label}
                         </span>
                         {buttonRight()}
-                    </button>
+                    </Button>
 
                     {/* <Link
                         to={props.path}

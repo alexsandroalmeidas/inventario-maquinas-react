@@ -1,6 +1,7 @@
 import * as React from "react";
 import Content from "../common/Content";
 import PageHeader from "../common/PageHeader";
+import Button from '../components/buttons/Button';
 
 function Dashboard(props) {
     return (
@@ -81,9 +82,9 @@ function Dashboard(props) {
 
                                                 <div className="pull-right">
                                                     <div className="btn-group">
-                                                        <button type="button" className="btn btn-xs btn-white active">Today</button>
-                                                        <button type="button" className="btn btn-xs btn-white">Monthly</button>
-                                                        <button type="button" className="btn btn-xs btn-white">Annual</button>
+                                                        <Button type="button" className="btn btn-xs btn-white active">Today</Button>
+                                                        <Button type="button" className="btn btn-xs btn-white">Monthly</Button>
+                                                        <Button type="button" className="btn btn-xs btn-white">Annual</Button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -483,9 +484,9 @@ function Dashboard(props) {
                                     <div className="input-group input-group-sm">
                                         <input type="text" className="form-control" />
                                         <span className="input-group-btn">
-                                            <button
+                                            <Button
                                                 className="btn btn-primary" type="button">Send
-                                            </button> </span></div>
+                                            </Button> </span></div>
                                 </div>
 
                             </div>

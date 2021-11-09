@@ -1,6 +1,7 @@
-import React from "react";
-import Content from "./Content";
-import PageHeader from "./PageHeader";
+import React from 'react';
+import Content from './Content';
+import PageHeader from './PageHeader';
+import Button from '../components/buttons/Button';
 
 const Form = (props) => {
     return (
@@ -201,12 +202,12 @@ const Form = (props) => {
 
                                         <div className="col-sm-10">
                                             <div className="input-group m-b"><span className="input-group-btn">
-                                                <button type="button" className="btn btn-primary">Go!</button> </span> <input
+                                                <Button type="button" className="btn btn-primary">Go!</Button> </span> <input
                                                     type="text" className="form-control" />
                                             </div>
                                             <div className="input-group"><input type="text" className="form-control" /> <span
-                                                className="input-group-btn"> <button type="button" className="btn btn-primary">Go!
-                                                </button> </span></div>
+                                                className="input-group-btn"> <Button type="button" className="btn btn-primary">Go!
+                                                </Button> </span></div>
                                         </div>
                                     </div>
                                     <div className="hr-line-dashed"></div>
@@ -215,8 +216,8 @@ const Form = (props) => {
                                         <div className="col-sm-10">
                                             <div className="input-group m-b">
                                                 <div className="input-group-btn" dropdown>
-                                                    <button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                                        Action <span className="caret"></span></button>
+                                                    <Button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
+                                                        Action <span className="caret"></span></Button>
                                                     <ul className="dropdown-menu">
                                                         {/* <li><a href="">Action</a></li>
                                                         <li><a href="">Another action</a></li>
@@ -229,8 +230,8 @@ const Form = (props) => {
                                             <div className="input-group"><input type="text" className="form-control" />
 
                                                 <div className="input-group-btn" dropdown>
-                                                    <button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                                        Action <span className="caret"></span></button>
+                                                    <Button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
+                                                        Action <span className="caret"></span></Button>
                                                     <ul className="dropdown-menu pull-right">
                                                         {/* <li><a href="">Action</a></li>
                                                         <li><a href="">Another action</a></li>
@@ -248,9 +249,9 @@ const Form = (props) => {
                                         <div className="col-sm-10">
                                             <div className="input-group m-b">
                                                 <div className="input-group-btn" dropdown>
-                                                    <button tabindex="-1" className="btn btn-white" type="button">Action</button>
-                                                    <button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                                        <span className="caret"></span></button>
+                                                    <Button tabindex="-1" className="btn btn-white" type="button">Action</Button>
+                                                    <Button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
+                                                        <span className="caret"></span></Button>
                                                     <ul className="dropdown-menu">
                                                         {/* <li><a href="">Action</a></li>
                                                         <li><a href="">Another action</a></li>
@@ -264,9 +265,9 @@ const Form = (props) => {
 
 
                                                 <div className="input-group-btn" dropdown>
-                                                    <button className="btn btn-white" type="button">Action</button>
-                                                    <button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                                        <span className="caret"></span></button>
+                                                    <Button className="btn btn-white" type="button">Action</Button>
+                                                    <Button className="btn btn-white dropdown-toggle" dropdown-toggle type="button">
+                                                        <span className="caret"></span></Button>
                                                     <ul className="dropdown-menu pull-right">
                                                         {/* <li><a href="">Action</a></li>
                                                         <li><a href="">Another action</a></li>
@@ -281,8 +282,8 @@ const Form = (props) => {
                                     <div className="hr-line-dashed"></div>
                                     <div className="form-group">
                                         <div className="col-sm-4 col-sm-offset-2">
-                                            <button className="btn btn-white" type="submit">Cancel</button>
-                                            <button className="btn btn-primary" type="submit">Save changes</button>
+                                            <Button className="btn btn-white" type="submit">Cancel</Button>
+                                            <Button className="btn btn-primary" type="submit">Save changes</Button>
                                         </div>
                                     </div>
 
