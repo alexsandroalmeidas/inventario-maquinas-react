@@ -1,22 +1,71 @@
 import React, { Fragment, useMemo, useState, useRef } from 'react';
-import Content from '../common/Content';
-import PageHeader from '../common/PageHeader';
-import TTable from '../components/table/TTable';
-import Button from '../components/buttons/Button';
-import Modal from '../components/modals/Modal';
+import { Form, Row, Col, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
+import Content from '../common/Content';
+import PageHeader from '../common/PageHeader';
+import TTable from '../components/table/TTable';
+import TButton from '../components/buttons/TButton';
+
 const serverData = [
-    { "status": "Ativo", "nome": "Nome da Empresa 01", "documento": "123.456.789/0001-01" },
-    { "status": "Ativo", "nome": "Nome da Empresa 02", "documento": "213.456.789/0001-02" },
-    { "status": "Inativo", "nome": "Nome da Empresa 03", "documento": "321.456.789/0001-03" },
+    {
+        id: 1,
+        status: "Ativo",
+        nome: "Nome da Empresa 01",
+        documento: "123.456.789/0001-01",
+        telefone: "55-999458659",
+        email: "999458659@teste.com.br",
+        uf: "SP",
+        municipio: "Araraquara",
+        cep: "90000-100",
+        endereco: "Av. X",
+        numero: "666",
+        complemento: "Casa branca"
+
+    },
+    {
+        id: 2,
+        status: "Ativo",
+        nome: "Nome da Empresa 02",
+        documento: "213.456.789/0001-02",
+        telefone: "55-998567412",
+        email: "998567412@teste.com.br",
+        uf: "SP",
+        municipio: "Saquarema",
+        cep: "90000-100",
+        endereco: "Av. X",
+        numero: "667",
+        complemento: "Casa azul"
+    },
+    {
+        id: 3,
+        status: "Inativo",
+        nome: "Nome da Empresa 03",
+        documento: "321.456.789/0001-03",
+        telefone: "55-996532147",
+        email: "996532147@teste.com.br",
+        uf: "SP",
+        municipio: "São Paulo",
+        cep: "90000-100",
+        endereco: "Av. X",
+        numero: "668",
+        complemento: "Casa preta"
+    },
 ];
 
-function ClientesListagem(props) {
+const ClientesListagem = (props) => {
 
-    const modal1 = useRef(null);
-    const modal2= useRef(null);
+    const [clientEdit, setClientEdit] = useState({});
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleEditClick = (row) => {
+        setShow(true);
+        setClientEdit(row.original);
+    };
 
     const columns = useMemo(
         () => [
@@ -26,30 +75,30 @@ function ClientesListagem(props) {
                 Cell: (props) => {
                     const { id, values } = props.row;
 
-                    const loadAtivoButton = () => {
+                    const loadAtivoTButton = () => {
                         if (values.status === 'Ativo') {
                             return (
-                                <Button className="btn btn-primary btn-sm" >
+                                <TButton className="btn btn-primary btn-sm" >
                                     Ativo
-                                </Button>
+                                </TButton>
                             );
                         }
                     }
 
-                    const loadInativoButton = () => {
+                    const loadInativoTButton = () => {
                         if (values.status === 'Inativo') {
                             return (
-                                <Button className="btn btn-default btn-sm" style={{ backgroundColor: "lightgrey" }}>
+                                <TButton className="btn btn-default btn-sm" style={{ backgroundColor: "lightgrey" }}>
                                     Inativo
-                                </Button>
+                                </TButton>
                             );
                         }
                     }
 
                     return (
                         <div>
-                            {loadInativoButton()}
-                            {loadAtivoButton()}
+                            {loadInativoTButton()}
+                            {loadAtivoTButton()}
                         </div >
                     );
                 },
@@ -64,43 +113,43 @@ function ClientesListagem(props) {
             },
             {
                 Header: 'Ação',
-                id: 'click-me-button',
+                id: 'click-me-TButton',
                 Cell: (props) => {
                     const { id, values } = props.row;
 
-                    const loadAtivarButton = () => {
+                    const loadAtivarTButton = () => {
                         if (values.status === 'Ativo') {
                             return (
-                                <Button
+                                <TButton
                                     className="btn btn-outline btn-danger btn-sm"
-                                    onClick={() => handleInativarButtonClick(props.row)}>
+                                    onClick={() => handleInactivateClick(props.row)}>
                                     Inativar
-                                </Button>
+                                </TButton>
                             );
                         }
                     }
 
-                    const loadInativarButton = () => {
+                    const loadInativarTButton = () => {
                         if (values.status === 'Inativo') {
                             return (
-                                <Button
+                                <TButton
                                     className="btn btn-outline btn-primary btn-sm"
-                                    onClick={() => handleAtivarButtonClick(props.row)}>
+                                    onClick={() => handleActivateClick(props.row)}>
                                     Ativar
-                                </Button>
+                                </TButton>
                             );
                         }
                     }
 
                     return (
                         <div>
-                            <Button className="btn btn-outline btn-success btn-sm" onClick={() => handleButtonClick(props.row)}>
+                            <TButton className="btn btn-outline btn-success btn-sm" onClick={() => { handleEditClick(props.row) }}>
                                 <FontAwesomeIcon icon={faPencilAlt} />&nbsp;
                                 Editar
-                            </Button>
+                            </TButton>
 
-                            {loadInativarButton()}
-                            {loadAtivarButton()}
+                            {loadInativarTButton()}
+                            {loadAtivarTButton()}
 
                         </div >
                     );
@@ -110,17 +159,18 @@ function ClientesListagem(props) {
         []
     );
 
-
-    const handleButtonClick = (row) => {
+    const handleActivateClick = (row) => {
         // debugger;
     };
 
-    const handleAtivarButtonClick = (row) => {
+    const handleInactivateClick = (row) => {
         // debugger;
     };
 
-    const handleInativarButtonClick = (row) => {
-        // debugger;
+    const handleRegistration = (data) => console.log(data);
+
+    const handleError = (errors) => {
+        console.log(errors);
     };
 
     return (
@@ -135,9 +185,6 @@ function ClientesListagem(props) {
                                     <h5>Cadastros de Clientes</h5>
 
                                     <div className='ibox-tools'> </div>
-
-                                    <Button onClick={() => { modal1.current.open() }}>I'm a modal 1</Button>
-                                    <Button onClick={() => { modal2.current.open() }}>I'm a modal 2</Button>
                                 </div>
 
                                 <TTable
@@ -149,13 +196,125 @@ function ClientesListagem(props) {
                     </div>
                 </Content>
 
-                <Modal ref={modal1} >
-                    <h1>Teste 1</h1>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeTButton>
+                        <Modal.Title>Detalhes</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextNome">
+                                <Form.Label column sm={4}>
+                                    Nome
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control className="form-control" defaultValue={clientEdit.nome} />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextDocumento">
+                                <Form.Label column sm={4}>
+                                    Documento
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control className="form-control" defaultValue={clientEdit.documento} />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextTelefone">
+                                <Form.Label column sm={4}>
+                                    Telefone
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control className="form-control" defaultValue={clientEdit.telefone} />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                                <Form.Label column sm={4}>
+                                    E-mail
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control type="email" className="form-control" defaultValue={clientEdit.email} />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextCep">
+                                <Form.Label column sm={4}>
+                                    CEP
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control className="form-control" defaultValue={clientEdit.cep} />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextEndereco">
+                                <Form.Label column sm={4}>
+                                    Endereço
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control className="form-control" defaultValue={clientEdit.endereco} />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextNumero">
+                                <Form.Label column sm={4}>
+                                    Número
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control className="form-control" defaultValue={clientEdit.numero} />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3" controlId="formPlaintextComplemento">
+                                <Form.Label column sm={4}>
+                                    Complemento
+                                </Form.Label>
+                                <Col sm={8}>
+                                    <Form.Control className="form-control" defaultValue={clientEdit.complemento} />
+                                </Col>
+                            </Form.Group>
+
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        {/* <TButton variant="secondary" onClick={handleClose}>
+                            Close
+                        </TButton> */}
+                        <TButton variant="primary" onClick={handleClose}>
+                            Salvar
+                        </TButton>
+                    </Modal.Footer>
                 </Modal>
 
-                <Modal ref={modal2} >
-                    <h1>Teste 2</h1>
-                </Modal>
+                {/* <Modal ref={modalEdit} >
+
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Detalhes</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <Form>
+                                <Form.Group as={Row} className="mb-3" controlId="formPlaintextNome">
+                                    <Form.Label column sm={4}>
+                                        Nome
+                                    </Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control className="form-control" defaultValue={clientEdit.nome} />
+                                    </Col>
+                                </Form.Group>
+
+                                <Form.Group as={Row} className="mb-3" controlId="formPlaintextDocumento">
+                                    <Form.Label column sm={4}>
+                                        Documento
+                                    </Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control className="form-control" defaultValue={clientEdit.documento} />
+                                    </Col>
+                                </Form.Group>
+                            </Form>
+                        </div>
+                    </div>
+                </Modal> */}
 
             </Fragment>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import Button from '../components/buttons/Button';
+import TButton from '../components/buttons/TButton';
 
 const Header = ({ toggleNavigation }) => {
 
@@ -11,12 +11,12 @@ const Header = ({ toggleNavigation }) => {
         <div className="row border-bottom">
             <nav className="navbar navbar-static-top" role="navigation" style={{ marginBottom: 0 }}>
                 <div className="navbar-header">
-                    <Button className="navbar-minimalize minimalize-styl-2 btn btn-primary"
+                    <TButton className="navbar-minimalize minimalize-styl-2 btn btn-primary"
                         onClick={(e) => toggleNavigation(e)}>
                         <FontAwesomeIcon
                             icon={faBars}
                         ></FontAwesomeIcon>
-                    </Button>
+                    </TButton>
                 </div>
                 <ul className="nav navbar-top-links navbar-right">
                     <li style={{ float: 'right' }}>

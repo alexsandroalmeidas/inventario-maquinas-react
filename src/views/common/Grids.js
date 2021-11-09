@@ -3,7 +3,7 @@ import Content from '../common/Content';
 import PageHeader from '../common/PageHeader';
 import TTable from '../components/table/TTable';
 import makeData from '../components/table/makeData';
-import Button from '../components/buttons/Button';
+import TButton from '../components/buttons/TButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -53,14 +53,14 @@ const Grids = (props) => {
                     const rowIdx = props.row.id;
                     return (
                         <div>
-                            <Button className="btn btn-primary btn-sm" onClick={() => handleButtonClick(props.row)}>
+                            <TButton className="btn btn-primary btn-sm" onClick={() => handleButtonClick(props.row)}>
                                 Inativar
-                            </Button>
+                            </TButton>
 
-                            <Button className="btn btn-default btn-sm" onClick={() => handleButtonClick(props.row)}>
+                            <TButton className="btn btn-default btn-sm" onClick={() => handleButtonClick(props.row)}>
                                 <FontAwesomeIcon icon={faPencilAlt} />&nbsp;
                                 Editar
-                            </Button>
+                            </TButton>
 
 
                         </div >

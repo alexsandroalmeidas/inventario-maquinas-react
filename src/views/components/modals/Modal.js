@@ -71,15 +71,15 @@ const Styles = styled.div`
         z-index: 2;
         position: relative;
         margin: 0 auto;
-        background-color: white;
+        /* background-color: white; */
+        background: #f8fafb;
         border: 1px solid rgba(255, 255, 255, 0.25);
         border-radius: 3px;
         overflow-x: hidden;
         overflow-y: auto;
         max-height: 100%;
-        padding: 15px 20px;
-        color: #c3c0c0;
-        padding: 20px 30px 30px 30px;
+        padding: 0;
+        flex: none;
     }
 
 

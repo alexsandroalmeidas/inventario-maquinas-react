@@ -3466,7 +3466,7 @@ video {
   z-index: 2050;
 }
 /* MODAL */
-.modal-content {
+/* .modal-content {
   background-clip: padding-box;
   background-color: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0);
@@ -3478,9 +3478,9 @@ video {
 .modal-dialog {
   z-index: 2200;
 }
-/* .modal-body {
+.modal-body {
   padding: 20px 30px 30px 30px;
-} */
+}
 .inmodal .modal-body {
   background: #f8fafb;
 }
@@ -3503,7 +3503,7 @@ video {
 }
 .modal-footer {
   margin-top: 0;
-}
+} */
 /* WRAPPERS */
 #wrapper {
   width: 100%;
@@ -8188,7 +8188,7 @@ body.md-skin {
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 220px;
-    min-height: 1200px;
+    min-height: 657px;
   }
   .navbar-static-side {
     z-index: 2001;
