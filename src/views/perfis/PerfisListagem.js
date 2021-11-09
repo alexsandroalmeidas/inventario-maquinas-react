@@ -148,6 +148,9 @@ const PerfisListagem = (props) => {
     };
 
     const loadDetails = () => {
+        if (!show)
+            return null;
+
         return (
             <div className="row">
                 <div className="col-lg-12">
@@ -205,14 +208,13 @@ const PerfisListagem = (props) => {
 
                                     <div className='ibox-tools'> </div>
                                 </div>
-                                {show ?
-                                    loadDetails()
-                                    :
-                                    <TTable
-                                        columns={columns}
-                                        serverData={serverData}
-                                    />
-                                }
+
+                                <TTable
+                                    columns={columns}
+                                    serverData={serverData}
+                                />
+
+                                {loadDetails()}
 
                             </div>
                         </div>
