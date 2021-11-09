@@ -1,9 +1,12 @@
-import React, { useState, useImperativeHandle, useEffect, useCallback, forwardRef } from 'react';
+import React, {
+    useState,
+    useImperativeHandle,
+    useEffect,
+    useCallback,
+    forwardRef
+} from 'react';
 import { createPortal } from 'react-dom';
-// import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Styles = styled.div`
     .modal {
@@ -13,7 +16,7 @@ const Styles = styled.div`
         right: 0;
         bottom: 0;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.65);
+        background-color: rgba(0, 0, 0, 0.35);
         width: 100%;
         height: 100%;
         display: flex;
@@ -68,7 +71,7 @@ const Styles = styled.div`
         z-index: 2;
         position: relative;
         margin: 0 auto;
-        background-color: #303030;
+        background-color: white;
         border: 1px solid rgba(255, 255, 255, 0.25);
         border-radius: 3px;
         overflow-x: hidden;
@@ -76,6 +79,7 @@ const Styles = styled.div`
         max-height: 100%;
         padding: 15px 20px;
         color: #c3c0c0;
+        padding: 20px 30px 30px 30px;
     }
 
 
@@ -90,66 +94,7 @@ const Styles = styled.div`
     }
 `;
 
-const Background = styled.div`
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalWrapper = styled.div`
-  width: 800px;
-  height: 500px;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  position: relative;
-  z-index: 10;
-  border-radius: 10px;
-`;
-
-const ModalImg = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px 0 0 10px;
-  background: #000;
-`;
-
-const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.8;
-  color: #141414;
-  p {
-    margin-bottom: 1rem;
-  }
-  button {
-    padding: 10px 24px;
-    background: #141414;
-    color: #fff;
-    border: none;
-  }
-`;
-
-// const CloseModalButton = styled(faPencilAlt)`
-//   cursor: pointer;
-//   position: absolute;
-//   top: 20px;
-//   right: 20px;
-//   width: 32px;
-//   height: 32px;
-//   padding: 0;
-//   z-index: 10;
-// `;
-
-const modalElement = document.getElementById('modal-root')
+const modalElement = document.getElementById('modal-root');
 
 const Modal = ({ children, fade = false, defaultOpened = false }, ref) => {
 
@@ -184,7 +129,7 @@ const Modal = ({ children, fade = false, defaultOpened = false }, ref) => {
                     </span> */}
                     <div className="modal-body">{children}</div>
                 </div>
-            </Styles>   
+            </Styles>
         ) : null,
         modalElement
     )

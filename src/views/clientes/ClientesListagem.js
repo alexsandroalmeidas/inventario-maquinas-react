@@ -13,12 +13,10 @@ const serverData = [
     { "status": "Inativo", "nome": "Nome da Empresa 03", "documento": "321.456.789/0001-03" },
 ];
 
-
-
 function ClientesListagem(props) {
 
-    const modal = useRef(null);
-
+    const modal1 = useRef(null);
+    const modal2= useRef(null);
 
     const columns = useMemo(
         () => [
@@ -138,7 +136,8 @@ function ClientesListagem(props) {
 
                                     <div className='ibox-tools'> </div>
 
-                                    <Button onClick={() => { modal.current.open() }}>I'm a modal</Button>
+                                    <Button onClick={() => { modal1.current.open() }}>I'm a modal 1</Button>
+                                    <Button onClick={() => { modal2.current.open() }}>I'm a modal 2</Button>
                                 </div>
 
                                 <TTable
@@ -150,8 +149,12 @@ function ClientesListagem(props) {
                     </div>
                 </Content>
 
-                <Modal ref={modal} >
-                    <h1>Teste</h1>
+                <Modal ref={modal1} >
+                    <h1>Teste 1</h1>
+                </Modal>
+
+                <Modal ref={modal2} >
+                    <h1>Teste 2</h1>
                 </Modal>
 
             </Fragment>
