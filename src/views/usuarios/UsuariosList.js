@@ -1,8 +1,8 @@
 import * as React from "react";
-import Content from "../common/Content";
-import PageHeader from "../common/PageHeader";
+import Content from "../../components/common/Content";
+import PageHeader from "../../components/common/PageHeader";
 
-function UsuariosListagem(props) {
+const UsuariosList = () => {
 
     return (
         <>
@@ -35,4 +35,4 @@ function UsuariosListagem(props) {
     )
 }
 
-export default UsuariosListagem;
+export default UsuariosList;

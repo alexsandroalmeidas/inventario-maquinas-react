@@ -1,7 +1,7 @@
 import React from 'react';
 import Content from './Content';
 import PageHeader from './PageHeader';
-import TButton from '../components/buttons/TButton';
+import TButton from '../buttons/TButton';
 
 const Form = (props) => {
     return (

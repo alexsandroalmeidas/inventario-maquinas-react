@@ -1,8 +1,8 @@
 import * as React from "react";
-import Content from "../common/Content";
-import PageHeader from "../common/PageHeader";
+import Content from "../../components/common/Content";
+import PageHeader from "../../components/common/PageHeader";
 
-function ParametrosListagem(props) {
+const ParametrosList = () => {
     return (
         <>
             <PageHeader beforeBreadcrumb="Cadastros" title="Parâmetros" />
@@ -34,4 +34,4 @@ function ParametrosListagem(props) {
     )
 }
 
-export default ParametrosListagem;
+export default ParametrosList;

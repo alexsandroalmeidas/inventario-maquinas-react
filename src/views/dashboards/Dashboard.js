@@ -1,9 +1,9 @@
 import * as React from "react";
-import Content from "../common/Content";
-import PageHeader from "../common/PageHeader";
-import TButton from '../components/buttons/TButton';
+import Content from "../../components/common/Content";
+import PageHeader from "../../components/common/PageHeader";
+import TButton from '../../components/buttons/TButton';
 
-function Dashboard(props) {
+const Dashboard = () => {
     return (
         <>
             <PageHeader title="Dashboard" />

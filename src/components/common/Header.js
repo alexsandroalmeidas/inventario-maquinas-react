@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import TButton from '../components/buttons/TButton';
+import TButton from '../buttons/TButton';
 
 const Header = ({ toggleNavigation }) => {
 

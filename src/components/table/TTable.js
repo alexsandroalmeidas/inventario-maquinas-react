@@ -15,7 +15,7 @@ import {
     useAsyncDebounce
 } from 'react-table';
 
-import '../../../plugins/footable/footable.core.css';
+import '../../plugins/footable/footable.core.css';
 
 import styled from 'styled-components';
 import Pagination from './Pagination';
@@ -198,10 +198,9 @@ const TTable = ({
                                         {headerGroup.headers.map((column) => (
                                             // Add the sorting props to control sorting. For this example
                                             // we can add them into the header props
-                                            <th {...column.getHeaderProps(column.getSortByToggleProps())}
+                                            <th {...column.getHeaderProps(column.getSortByToggleProps({ title: column.render("Header") }))}
                                                 className="footable-visible footable-sortable footable-sort-indicator">
                                                 {column.render("Header")}
-
                                                 {/* Add a sort direction indicator */}
                                                 {column.isSorted ? <span className="footable-sort-indicator"></span> : ''}
                                                 {/* <div>{column.canFilter ? column.render('Filter') : null}</div> */}

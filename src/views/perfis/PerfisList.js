@@ -1,14 +1,12 @@
-import React, { Fragment, useMemo, useState, useRef } from 'react';
-import { useHistory } from "react-router-dom";
-import { Form, Row, Col, Modal } from 'react-bootstrap';
+import React, { Fragment, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
-import Content from '../common/Content';
-import PageHeader from '../common/PageHeader';
-import TTable from '../components/table/TTable';
-import TButton from '../components/buttons/TButton';
-import { Link } from 'react-router-dom';
+import Content from '../../components/common/Content';
+import PageHeader from '../../components/common/PageHeader';
+import TTable from '../../components/table/TTable';
+import TButton from '../../components/buttons/TButton';
+import PerfilEdit from './PerfilEdit';
 
 const serverData = [
     {
@@ -16,7 +14,6 @@ const serverData = [
         status: "Ativo",
         nome: "Administrador",
         complemento: "Equipe 1"
-
     },
     {
         id: 2,
@@ -32,17 +29,17 @@ const serverData = [
     },
 ];
 
-const PerfisListagem = (props) => {
+const PerfisList = () => {
 
-    const [clientEdit, setClientEdit] = useState({});
+    const [perfilEdit, setPerfilEdit] = useState({});
     const [show, setShow] = useState(false);
-    const history = useHistory();
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleEditClick = (row) => {
-        debugger;
-        setShow(true);
-        setClientEdit(row.original);
-        // history.push('/perfilEdicao?id=1');
+        handleShow();
+        setPerfilEdit(row.original);
     };
 
     const columns = useMemo(
@@ -141,60 +138,6 @@ const PerfisListagem = (props) => {
         // debugger;
     };
 
-    const handleRegistration = (data) => console.log(data);
-
-    const handleBack = (errors) => {
-        console.log(errors);
-    };
-
-    const loadDetails = () => {
-        if (!show)
-            return null;
-
-        return (
-            <div className="row">
-                <div className="col-lg-12">
-                    <div className="ibox float-e-margins">
-
-                        <div className="ibox-content">
-                            <Form>
-                                <Form.Group as={Row} className="mb-3" controlId="formPlaintextNome">
-                                    <Form.Label column sm={4}>
-                                        Nome
-                                    </Form.Label>
-                                    <Col sm={8}>
-                                        <Form.Control className="form-control" defaultValue={clientEdit.nome} />
-                                    </Col>
-                                </Form.Group>
-
-                                <Form.Group as={Row} className="mb-3" controlId="formPlaintextComplemento">
-                                    <Form.Label column sm={4}>
-                                        Complemento
-                                    </Form.Label>
-                                    <Col sm={8}>
-                                        <Form.Control className="form-control" defaultValue={clientEdit.complemento} />
-                                    </Col>
-                                </Form.Group>
-
-                                <TButton variant="btn btn-block btn-outline" onClick={() => {
-                                    setShow(false);
-                                    setClientEdit({});
-                                }}>
-                                    Voltar
-                                </TButton>
-
-                                <TButton variant="primary">
-                                    Salvar
-                                </TButton>
-
-                            </Form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <>
             <Fragment>
@@ -214,7 +157,7 @@ const PerfisListagem = (props) => {
                                     serverData={serverData}
                                 />
 
-                                {loadDetails()}
+                                <PerfilEdit perfilEdit={perfilEdit} handleClose={handleClose} show={show} />
 
                             </div>
                         </div>
@@ -222,10 +165,9 @@ const PerfisListagem = (props) => {
                 </Content>
 
             </Fragment >
-
         </>
 
     )
 }
 
-export default PerfisListagem;
+export default PerfisList;

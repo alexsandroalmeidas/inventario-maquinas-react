@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import Content from '../common/Content';
 import PageHeader from '../common/PageHeader';
-import TTable from '../components/table/TTable';
-import makeData from '../components/table/makeData';
-import TButton from '../components/buttons/TButton';
+import TTable from '../table/TTable';
+import makeData from '../table/makeData';
+import TButton from '../buttons/TButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 

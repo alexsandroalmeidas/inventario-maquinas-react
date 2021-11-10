@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Header from './common/Header';
-import Sidebar from './common/Sidebar';
-import Footer from "./common/Footer";
-import Routes from "./common/Routes";
+import Header from '../components/common/Header';
+import Sidebar from '../components/common/Sidebar';
+import Footer from "../components/common/Footer";
+import Routes from "../components/common/Routes";
 import { BrowserRouter } from 'react-router-dom';
 import 'pace-js';
 
