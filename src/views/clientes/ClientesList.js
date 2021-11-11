@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useState, useRef } from 'react';
+import React, { Fragment, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,8 +31,8 @@ const serverData = [
         documento: "213.456.789/0001-02",
         telefone: "55-998567412",
         email: "998567412@teste.com.br",
-        uf: "SP",
-        municipio: "Saquarema",
+        uf: "AL",
+        municipio: "Capela",
         cep: "90000-100",
         endereco: "Av. X",
         numero: "667",
@@ -45,8 +45,8 @@ const serverData = [
         documento: "321.456.789/0001-03",
         telefone: "55-996532147",
         email: "996532147@teste.com.br",
-        uf: "SP",
-        municipio: "São Paulo",
+        uf: "MG",
+        municipio: "Arapuá",
         cep: "90000-100",
         endereco: "Av. X",
         numero: "668",
@@ -62,23 +62,26 @@ const ClientesList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleEditClick = (row) => {
-        handleShow();
-        setClientEdit(row.original);
-    };
+    const columns = useMemo(() => {
 
-    const columns = useMemo(
-        () => [
+        const handleEditClick = (row) => {
+            setClientEdit(row.original);
+            handleShow();            
+        };
+
+        return ([
             {
                 Header: 'Status',
                 accessor: 'status',
                 Cell: (props) => {
-                    const { id, values } = props.row;
+                    const { values } = props.row;
 
                     const loadAtivoTButton = () => {
                         if (values.status === 'Ativo') {
                             return (
-                                <TButton className="btn btn-primary btn-sm" >
+                                <TButton
+                                    className="btn btn-primary btn-sm"
+                                    style={{ cursor: "default" }}>
                                     Ativo
                                 </TButton>
                             );
@@ -90,7 +93,7 @@ const ClientesList = () => {
                             return (
                                 <TButton
                                     className="btn btn-default btn-sm"
-                                    style={{ backgroundColor: "lightgrey" }}>
+                                    style={{ backgroundColor: "lightgrey", cursor: "default" }}>
                                     Inativo
                                 </TButton>
                             );
@@ -117,7 +120,7 @@ const ClientesList = () => {
                 Header: 'Ação',
                 id: 'action',
                 Cell: (props) => {
-                    const { id, values } = props.row;
+                    const { values } = props.row;
 
                     const loadAtivarTButton = () => {
                         if (values.status === 'Ativo') {
@@ -159,7 +162,8 @@ const ClientesList = () => {
                     );
                 },
             }
-        ],
+        ])
+    },
         []
     );
 
@@ -194,7 +198,7 @@ const ClientesList = () => {
                     </div>
                 </Content>
 
-                <ClienteEdit clientEdit={clientEdit} handleClose={handleClose} show={show} />
+                <ClienteEdit client={clientEdit} onHide={handleClose} show={show} />
 
             </Fragment>
 

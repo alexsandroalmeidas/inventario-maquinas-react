@@ -2,17 +2,30 @@ import React from 'react';
 import { Form, Row, Col, Modal } from 'react-bootstrap';
 import TButton from '../../components/buttons/TButton';
 
-const PerfilEdit = ({ perfilEdit, handleClose, show }) => {
+const PerfilEdit = (props) => {
+    const { perfilEdit, handleClose, show } = props;
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal {...props}
+                show={show}
+                onHide={handleClose}>
                 <Modal.Header closeTButton>
                     <Modal.Title>Detalhes</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextNome">
+                        <Form.Group as={Row} controlId="formPlaintextStatus">
+                            <Form.Label column sm={4}>
+                                Status
+                            </Form.Label>
+                            <Col sm={8}>
+                                <Form.Label column sm={2}>
+                                    {perfilEdit.status}
+                                </Form.Label>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} controlId="formPlaintextNome">
                             <Form.Label column sm={4}>
                                 Nome
                             </Form.Label>

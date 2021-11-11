@@ -37,23 +37,28 @@ const PerfisList = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleEditClick = (row) => {
-        handleShow();
-        setPerfilEdit(row.original);
-    };
 
-    const columns = useMemo(
-        () => [
+
+    const columns = useMemo(() => {
+
+        const handleEditClick = (row) => {
+            handleShow();
+            setPerfilEdit(row.original);
+        };
+
+        return ([
             {
                 Header: 'Status',
                 accessor: 'status',
                 Cell: (props) => {
-                    const { id, values } = props.row;
+                    const { values } = props.row;
 
                     const loadAtivoTButton = () => {
                         if (values.status === 'Ativo') {
                             return (
-                                <TButton className="btn btn-primary btn-sm" >
+                                <TButton
+                                    className="btn btn-primary btn-sm"
+                                    style={{ cursor: "default" }}>
                                     Ativo
                                 </TButton>
                             );
@@ -63,7 +68,9 @@ const PerfisList = () => {
                     const loadInativoTButton = () => {
                         if (values.status === 'Inativo') {
                             return (
-                                <TButton className="btn btn-default btn-sm" style={{ backgroundColor: "lightgrey" }}>
+                                <TButton
+                                    className="btn btn-default btn-sm"
+                                    style={{ backgroundColor: "lightgrey", cursor: "default" }}>
                                     Inativo
                                 </TButton>
                             );
@@ -86,7 +93,7 @@ const PerfisList = () => {
                 Header: 'Ação',
                 id: 'click-me-TButton',
                 Cell: (props) => {
-                    const { id, values } = props.row;
+                    const { values } = props.row;
 
                     const loadAtivarTButton = () => {
                         if (values.status === 'Ativo') {
@@ -113,7 +120,7 @@ const PerfisList = () => {
                     }
 
                     return (
-                        <div>
+                        <>
                             <TButton className="btn btn-outline btn-success btn-sm" onClick={() => { handleEditClick(props.row) }}>
                                 <FontAwesomeIcon icon={faPencilAlt} />&nbsp;
                                 Editar
@@ -122,11 +129,12 @@ const PerfisList = () => {
                             {loadInativarTButton()}
                             {loadAtivarTButton()}
 
-                        </div >
+                        </ >
                     );
                 },
             }
-        ],
+        ])
+    },
         []
     );
 

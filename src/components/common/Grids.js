@@ -50,7 +50,6 @@ const Grids = (props) => {
                 Header: 'Edit',
                 id: 'click-me-button',
                 Cell: (props) => {
-                    const rowIdx = props.row.id;
                     return (
                         <div>
                             <TButton className="btn btn-primary btn-sm" onClick={() => handleButtonClick(props.row)}>

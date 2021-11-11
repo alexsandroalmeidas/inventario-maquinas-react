@@ -11,9 +11,10 @@ import {
     useSortBy,
     useFilters,
     useGlobalFilter,
-    usePagination,
-    useAsyncDebounce
+    usePagination
 } from 'react-table';
+
+import Table from 'react-bootstrap/Table';
 
 import '../../plugins/footable/footable.core.css';
 
@@ -191,7 +192,7 @@ const TTable = ({
                             handleSetData={dataSorted}
                         /> */}
 
-                        <table className="footable table table-stripped footable-loaded default" {...getTableProps()}>
+                        <Table responsive className="footable table table-stripped footable-loaded default" {...getTableProps()}>
                             <thead>
                                 {headerGroups.map((headerGroup) => (
                                     <tr {...headerGroup.getHeaderGroupProps()}>
@@ -262,7 +263,7 @@ const TTable = ({
                                     </td>
                                 </tr>
                             </tfoot>
-                        </table>
+                        </Table>
 
                         {/* <br />
                         <div>Showing the first 10 results of {page.length} rows</div>

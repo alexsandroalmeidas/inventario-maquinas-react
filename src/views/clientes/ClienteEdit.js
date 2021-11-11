@@ -1,99 +1,251 @@
-import React from 'react';
-import { Form, Row, Col, Modal } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Form, Row, Col, Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
 import TButton from '../../components/buttons/TButton';
+import Estados from '../../components/selects/Estados';
 
-const ClienteEdit = ({ clientEdit, handleClose, show }) => {
+const FIRST_COLUMN = 2;
+const SECOND_COLUMN = 10;
+
+
+const ClienteEdit = (props) => {
+
+    const { client, onHide, show, ...rest } = props;
+
+    const [validated, setValidated] = useState(false);
+    const [city, setCity] = useState(client.municipio);
+    const [selectedEstadoOption, setSelectedEstadoOption] = useState();
+    const [listCity, setListCity] = useState([]);
+
+
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            return
+        }
+
+        setValidated(true);
+        onHide();
+    };
+
+    const loadCities = (id) => {
+        let url = 'https://servicodados.ibge.gov.br/api/v1/';
+        url = url + `localidades/estados/${id}/municipios`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                data.sort((a, b) => a.nome.localeCompare(b.nome));
+                setListCity([...data]);
+                if (client.municipio)
+                    setCity(client.municipio);
+            });
+    };
+
+    useEffect(() => {
+        if (selectedEstadoOption) {
+            loadCities(selectedEstadoOption);
+        }
+    }, [selectedEstadoOption]);
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeTButton>
+            <Modal {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                show={show}
+                onHide={onHide}>
+                <Modal.Header>
                     <Modal.Title>Detalhes</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextNome">
-                            <Form.Label column sm={4}>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+
+                        {/* <Row>
+                            <Form.Label column lg={2}>
+                                Normal Text
+                            </Form.Label>
+                            <Col>
+                                <Form.Control type="text" placeholder="Normal text" />
+                            </Col>
+
+                            <Form.Label column lg={2}>
+                                Normal Text
+                            </Form.Label>
+                            <Col>
+                                <Form.Control type="text" placeholder="Normal text" />
+                            </Col>
+                        </Row> */}
+
+                        <Form.Group as={Row} className="mb-1">
+                            <Form.Label column sm={FIRST_COLUMN}>
+                                Status
+                            </Form.Label>
+                            <Col sm={SECOND_COLUMN}>
+                                <Form.Label column sm={4}>
+                                    {client.status}
+                                </Form.Label>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-1" controlId="validationCustom01" >
+                            <Form.Label column sm={FIRST_COLUMN}>
                                 Nome
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control className="form-control" defaultValue={clientEdit.nome} />
+                            <Col sm={SECOND_COLUMN}>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    defaultValue={client.nome} />
+
+                                <Form.Control.Feedback type="invalid">
+                                    Deve ser preenchido um nome.
+                                </Form.Control.Feedback>
                             </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextDocumento">
-                            <Form.Label column sm={4}>
+                        <Form.Group as={Row} className="mb-1" controlId="validationCustom02">
+                            <Form.Label column lg={FIRST_COLUMN}>
                                 Documento
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control className="form-control" defaultValue={clientEdit.documento} />
-                            </Col>
-                        </Form.Group>
+                            <Col sm={3}>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    defaultValue={client.documento} />
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextTelefone">
-                            <Form.Label column sm={4}>
+                                <Form.Control.Feedback type="invalid">
+                                    Deve ser preenchido um documento.
+                                </Form.Control.Feedback>
+                            </Col>
+
+                            <Form.Label column lg={FIRST_COLUMN}>
                                 Telefone
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control className="form-control" defaultValue={clientEdit.telefone} />
+                            <Col sm={5}>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    defaultValue={client.telefone} />
+
+                                <Form.Control.Feedback type="invalid">
+                                    Deve ser preenchido um telefone.
+                                </Form.Control.Feedback>
                             </Col>
+
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
-                            <Form.Label column sm={4}>
+                        <Form.Group as={Row} className="mb-1" controlId="validationCustom03">
+                            <Form.Label column sm={FIRST_COLUMN}>
                                 E-mail
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control type="email" className="form-control" defaultValue={clientEdit.email} />
+                            <Col sm={6}>
+                                <Form.Control
+                                    required
+                                    type="email"
+                                    className="form-control"
+                                    defaultValue={client.email} />
+
+                                <Form.Control.Feedback type="invalid">
+                                    Deve ser preenchido um e-mail.
+                                </Form.Control.Feedback>
                             </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextCep">
-                            <Form.Label column sm={4}>
+                        <Form.Group as={Row} className="mb-1" controlId="validationCustom04">
+                            <Form.Label column lg={FIRST_COLUMN}>
                                 CEP
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control className="form-control" defaultValue={clientEdit.cep} />
+                            <Col sm={2}>
+                                <Form.Control className="form-control" defaultValue={client.cep} />
                             </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextEndereco">
-                            <Form.Label column sm={4}>
+                        <Form.Group as={Row} className="mb-1" controlId="validationCustom05">
+                            <Form.Label column lg={FIRST_COLUMN}>
+                                Estado
+                            </Form.Label>
+                            <Col sm={3}>
+                                <Estados
+                                    required
+                                    style={{ margin: "0px" }}
+                                    defaultValue={client.uf}
+                                    selectedEstadoOption={selectedEstadoOption}
+                                    setSelectedEstadoOption={setSelectedEstadoOption} />
+
+                                <Form.Control.Feedback type="invalid">
+                                    Deve ser preenchido um estado.
+                                </Form.Control.Feedback>
+                            </Col>
+
+                            <Form.Label column lg={FIRST_COLUMN}>
+                                Municipio
+                            </Form.Label>
+                            <Col sm={5}>
+                                {/* <Form.Control
+                                    required
+                                    className="form-control" /> */}
+
+                                <Form.Select
+                                    style={{ margin: "0px" }}
+                                    className='form-control m-b'
+                                    name='select-municipio'
+                                    value={city}
+                                    defaultValue={client.municipio}
+                                    onChange={e => setCity(e.target.value)}>
+                                    {listCity.map((a, b) => (
+                                        <option value={a.sigla}>{a.nome}</option>
+                                    ))}
+                                </Form.Select>
+
+                                <Form.Control.Feedback type="invalid">
+                                    Deve ser preenchido um munícipio.
+                                </Form.Control.Feedback>
+                            </Col>
+
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-1" controlId="validationCustom06">
+                            <Form.Label column lg={FIRST_COLUMN}>
                                 Endereço
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control className="form-control" defaultValue={clientEdit.endereco} />
+                            <Col sm={6}>
+                                <Form.Control className="form-control" defaultValue={client.endereco} />
                             </Col>
-                        </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextNumero">
-                            <Form.Label column sm={4}>
+                            <Form.Label column LG={FIRST_COLUMN}>
                                 Número
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control className="form-control" defaultValue={clientEdit.numero} />
+                            <Col sm={2}>
+                                <Form.Control className="form-control" defaultValue={client.numero} />
                             </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3" controlId="formPlaintextComplemento">
-                            <Form.Label column sm={4}>
+                        <Form.Group as={Row} className="mb-1" controlId="validationCustom07">
+                            <Form.Label column sm={FIRST_COLUMN}>
                                 Complemento
                             </Form.Label>
-                            <Col sm={8}>
-                                <Form.Control className="form-control" defaultValue={clientEdit.complemento} />
+                            <Col sm={SECOND_COLUMN}>
+                                <Form.Control className="form-control" defaultValue={client.complemento} />
                             </Col>
                         </Form.Group>
+
+                        <Modal.Footer>
+                            <TButton variant="btn btn-block btn-outline" onClick={onHide}>
+                                Voltar
+                            </TButton>
+                            <TButton type="submit" variant="primary">
+                                Salvar
+                            </TButton>
+                        </Modal.Footer>
 
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <TButton variant="btn btn-block btn-outline" onClick={handleClose}>
-                        Voltar
-                    </TButton>
-                    <TButton variant="primary" onClick={handleClose}>
-                        Salvar
-                    </TButton>
-                </Modal.Footer>
+
             </Modal>
         </>
     )
