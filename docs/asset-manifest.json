@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/inventario-maquinas-react/static/css/main.a9afc2b1.chunk.css",
-    "main.js": "/inventario-maquinas-react/static/js/main.7e473035.chunk.js",
-    "main.js.map": "/inventario-maquinas-react/static/js/main.7e473035.chunk.js.map",
-    "runtime-main.js": "/inventario-maquinas-react/static/js/runtime-main.bea16a4a.js",
-    "runtime-main.js.map": "/inventario-maquinas-react/static/js/runtime-main.bea16a4a.js.map",
-    "static/js/2.caf75aa1.chunk.js": "/inventario-maquinas-react/static/js/2.caf75aa1.chunk.js",
-    "static/js/2.caf75aa1.chunk.js.map": "/inventario-maquinas-react/static/js/2.caf75aa1.chunk.js.map",
+    "main.js": "/inventario-maquinas-react/static/js/main.35a78c5b.chunk.js",
+    "main.js.map": "/inventario-maquinas-react/static/js/main.35a78c5b.chunk.js.map",
+    "runtime-main.js": "/inventario-maquinas-react/static/js/runtime-main.19b15001.js",
+    "runtime-main.js.map": "/inventario-maquinas-react/static/js/runtime-main.19b15001.js.map",
+    "static/js/2.a07a6c96.chunk.js": "/inventario-maquinas-react/static/js/2.a07a6c96.chunk.js",
+    "static/js/2.a07a6c96.chunk.js.map": "/inventario-maquinas-react/static/js/2.a07a6c96.chunk.js.map",
     "static/css/3.0a9ec390.chunk.css": "/inventario-maquinas-react/static/css/3.0a9ec390.chunk.css",
     "static/js/3.ff1582f8.chunk.js": "/inventario-maquinas-react/static/js/3.ff1582f8.chunk.js",
     "static/js/3.ff1582f8.chunk.js.map": "/inventario-maquinas-react/static/js/3.ff1582f8.chunk.js.map",
     "static/css/4.14b38408.chunk.css": "/inventario-maquinas-react/static/css/4.14b38408.chunk.css",
-    "static/js/4.b3a27277.chunk.js": "/inventario-maquinas-react/static/js/4.b3a27277.chunk.js",
-    "static/js/4.b3a27277.chunk.js.map": "/inventario-maquinas-react/static/js/4.b3a27277.chunk.js.map",
-    "static/js/5.99bbcd3b.chunk.js": "/inventario-maquinas-react/static/js/5.99bbcd3b.chunk.js",
-    "static/js/5.99bbcd3b.chunk.js.map": "/inventario-maquinas-react/static/js/5.99bbcd3b.chunk.js.map",
+    "static/js/4.0f749893.chunk.js": "/inventario-maquinas-react/static/js/4.0f749893.chunk.js",
+    "static/js/4.0f749893.chunk.js.map": "/inventario-maquinas-react/static/js/4.0f749893.chunk.js.map",
+    "static/js/5.8e14fe18.chunk.js": "/inventario-maquinas-react/static/js/5.8e14fe18.chunk.js",
+    "static/js/5.8e14fe18.chunk.js.map": "/inventario-maquinas-react/static/js/5.8e14fe18.chunk.js.map",
     "index.html": "/inventario-maquinas-react/index.html",
     "static/css/3.0a9ec390.chunk.css.map": "/inventario-maquinas-react/static/css/3.0a9ec390.chunk.css.map",
     "static/css/4.14b38408.chunk.css.map": "/inventario-maquinas-react/static/css/4.14b38408.chunk.css.map",
     "static/css/main.a9afc2b1.chunk.css.map": "/inventario-maquinas-react/static/css/main.a9afc2b1.chunk.css.map",
-    "static/js/2.caf75aa1.chunk.js.LICENSE.txt": "/inventario-maquinas-react/static/js/2.caf75aa1.chunk.js.LICENSE.txt",
+    "static/js/2.a07a6c96.chunk.js.LICENSE.txt": "/inventario-maquinas-react/static/js/2.a07a6c96.chunk.js.LICENSE.txt",
     "static/js/3.ff1582f8.chunk.js.LICENSE.txt": "/inventario-maquinas-react/static/js/3.ff1582f8.chunk.js.LICENSE.txt",
     "static/media/App.css": "/inventario-maquinas-react/static/media/word_map.59621c9b.png",
     "static/media/footable.core.css": "/inventario-maquinas-react/static/media/footable.c7a12ae3.woff",
@@ -27,10 +27,10 @@
     "static/media/logo_tino_transparent.3aa69a71.png": "/inventario-maquinas-react/static/media/logo_tino_transparent.3aa69a71.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.bea16a4a.js",
+    "static/js/runtime-main.19b15001.js",
     "static/css/3.0a9ec390.chunk.css",
     "static/js/3.ff1582f8.chunk.js",
     "static/css/main.a9afc2b1.chunk.css",
-    "static/js/main.7e473035.chunk.js"
+    "static/js/main.35a78c5b.chunk.js"
   ]
 }

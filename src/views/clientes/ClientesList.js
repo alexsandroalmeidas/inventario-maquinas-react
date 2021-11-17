@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-
+import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import Content from '../../components/common/Content';
 import PageHeader from '../../components/common/PageHeader';
 import TTable from '../../components/table/TTable';
@@ -58,15 +58,16 @@ const ClientesList = () => {
 
     const [clientEdit, setClientEdit] = useState({});
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const methods = useForm();
+    const onSubmit = data => console.log(data);
 
     const columns = useMemo(() => {
 
         const handleEditClick = (row) => {
             setClientEdit(row.original);
-            handleShow();            
+            handleShow();
         };
 
         return ([
@@ -175,6 +176,10 @@ const ClientesList = () => {
         // debugger;
     };
 
+    const handleSubmitEdit = () => {
+        console.log("handleSubmitEdit");
+    }
+
     return (
         <>
             <Fragment>
@@ -198,7 +203,14 @@ const ClientesList = () => {
                     </div>
                 </Content>
 
-                <ClienteEdit client={clientEdit} onHide={handleClose} show={show} />
+                <FormProvider {...methods} > // pass all methods into the context
+                    <ClienteEdit
+                        client={clientEdit}
+                        onHide={handleClose}
+                        show={show}
+                        carregarCliente={true} 
+                        onSubmit={methods.handleSubmit(onSubmit)}/>
+                </FormProvider>
 
             </Fragment>
 
