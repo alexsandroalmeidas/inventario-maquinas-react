@@ -31,12 +31,13 @@ const serverData = [
 
 const PerfisList = () => {
 
+    const [loadingData, setLoadingData] = useState(true);
     const [perfilEdit, setPerfilEdit] = useState({});
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    const handleLoading = (loadingValue) => setLoadingData(loadingValue);
 
 
     const columns = useMemo(() => {
@@ -163,7 +164,8 @@ const PerfisList = () => {
                                 <TTable
                                     columns={columns}
                                     serverData={serverData}
-                                />
+                                    loadingData={loadingData}
+                                    setLoadingData={(ret) => handleLoading(ret)} />
 
                                 <PerfilEdit perfilEdit={perfilEdit} handleClose={handleClose} show={show} />
 

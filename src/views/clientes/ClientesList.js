@@ -1,14 +1,13 @@
-import React, { Fragment, useMemo, useState } from 'react';
+import React, { Fragment, useMemo, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
 import Content from '../../components/common/Content';
 import PageHeader from '../../components/common/PageHeader';
 import TTable from '../../components/table/TTable';
 import TButton from '../../components/buttons/TButton';
 import ClienteEdit from './ClienteEdit';
 
-const serverData = [
+const serverDataAux = [
     {
         id: 1,
         status: "Ativo",
@@ -54,14 +53,28 @@ const serverData = [
     },
 ];
 
+const NewHOC = (PassedComponent) => {
+    return class extends React.Component {
+        render() {
+            return (
+                <div>
+                    <PassedComponent {...this.props} />
+                </div>
+            )
+        }
+    }
+}
+
 const ClientesList = () => {
 
+    const [loadingData, setLoadingData] = useState(true);
     const [clientEdit, setClientEdit] = useState({});
     const [show, setShow] = useState(false);
+    const [serverData, setServerData] = useState([]);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const methods = useForm();
-    const onSubmit = data => console.log(data);
+    const handleLoading = (loadingValue) => setLoadingData(loadingValue);
 
     const columns = useMemo(() => {
 
@@ -176,9 +189,37 @@ const ClientesList = () => {
         // debugger;
     };
 
-    const handleSubmitEdit = () => {
-        console.log("handleSubmitEdit");
-    }
+    useEffect(() => {
+        async function getData() {
+            //   await axios
+            //     .get("https://covidtracking.com/api/v1/states/current.json")
+            //     .then((response) => {
+            //       // check if the data is populated
+            //       console.log(response.data);
+            //       setData(response.data);
+            //       // you tell it that you had the result
+            //       setLoadingData(false);
+            //     });
+            let clientesDb = localStorage['clientes'];
+
+            if (!clientesDb) {
+                localStorage['clientes'] = JSON.stringify(serverDataAux);
+                clientesDb = localStorage['clientes'];
+            }
+
+            let clientes = clientesDb ? JSON.parse(clientesDb) : [];
+
+            setServerData(clientes);
+            handleLoading(false);
+        }
+
+        if (loadingData) {
+            // if the result is not ready so you make the axios call
+            getData();
+        }
+    }, [loadingData]);
+
+    const NewComponentTable = NewHOC(TTable);
 
     return (
         <>
@@ -194,26 +235,24 @@ const ClientesList = () => {
                                     <div className='ibox-tools'> </div>
                                 </div>
 
-                                <TTable
+                                <NewComponentTable
                                     columns={columns}
                                     serverData={serverData}
+                                    loadingData={loadingData}
+                                    setLoadingData={(ret) => handleLoading(ret)}
                                 />
                             </div>
                         </div>
                     </div>
                 </Content>
 
-                <FormProvider {...methods} > // pass all methods into the context
-                    <ClienteEdit
-                        client={clientEdit}
-                        onHide={handleClose}
-                        show={show}
-                        carregarCliente={true} 
-                        onSubmit={methods.handleSubmit(onSubmit)}/>
-                </FormProvider>
+                <ClienteEdit
+                    client={clientEdit}
+                    onHide={handleClose}
+                    show={show}
+                    carregarCliente={true} />
 
             </Fragment>
-
         </>
 
     )

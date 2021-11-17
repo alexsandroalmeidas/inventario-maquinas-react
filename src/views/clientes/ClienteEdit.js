@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { Form, Row, Col, Modal, InputGroup, Button } from 'react-bootstrap';
-import { useForm, reset } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Form, Row, Col, Modal } from 'react-bootstrap';
 import TButton from '../../components/buttons/TButton';
-import { TInput, TForm } from '../../components/components';
 import Estados from '../../components/selects/Estados';
-// import useForm from '../../utils/useForm';
-import validate from './ClienteEditValidationRules';
 import InputMask from "react-input-mask";
 
 const FIRST_COLUMN = 2;
@@ -13,148 +9,65 @@ const SECOND_COLUMN = 10;
 
 const ClienteEdit = ({ client, onHide, show, carregarCliente, ...rest }) => {
 
-    // const [carregarCliente, setCarregarCliente] = useState(true);
     const [validated, setValidated] = useState(false);
-
-
-    // const {
-    //     values,
-    //     errors,
-    //     handleChange,
-    //     handleSubmit,
-    // } = useForm(onHide, validate);
-
+    const [closeModal, setCloseModal] = useState(false);
     const [municipio, setMunicipio] = useState("");
     const [selectedEstadoOption, setSelectedEstadoOption] = useState();
     const [listCity, setListCity] = useState([]);
 
-
-
-
-    // const handleSubmitEdit = (event) => {
-    //     const form = event.currentTarget;
-    //     event.preventDefault();
-    //     debugger;
-
-    //     // if (form.checkValidity() === true) {
-    //     //     event.preventDefault();
-    //     //     event.stopPropagation();
-    //     //     setValidated(true);
-    //     // }
-
-    //     // if (formValid(formEditState)) {
-    //     //     console.log(formEditState)
-    //     // } else {
-    //     //     console.log("Form is invalid!");
-    //     // }
-    // };
-
-    // const formValChange = e => {
-    //     e.preventDefault();
-    //     debugger;
-    //     const { name, value } = e.target;
-    //     let isError = { ...formEditState.isError };
-
-    //     switch (name) {
-    //         case "nome":
-    //             isError.nome = value.trim().length < 1 ? "Nome required" : '';
-    //             break;
-    //         // case "email":
-    //         //     isError.email = regExp.test(value)
-    //         //         ? ""
-    //         //         : "Email address is invalid";
-    //         //     break;
-    //         // case "password":
-    //         //     isError.password =
-    //         //         value.length < 6 ? "Atleast 6 characaters required" : "";
-    //         //     break;
-    //         default:
-    //             break;
-    //     }
-
-    //     setFormEditState({
-    //         isError,
-    //         [name]: value
-    //     })
-    // };
-
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     formState: { errors },
-    // } = useForm();
-    // const onSubmit = (data) => {
-    //     alert(JSON.stringify(data));
-    // };
-    // console.log(errors);
-
-    const loadCities = (id) => {
-        let url = 'https://servicodados.ibge.gov.br/api/v1/';
-        url = url + `localidades/estados/${id}/municipios`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                data.sort((a, b) => a.nome.localeCompare(b.nome));
-                setListCity([...data]);
-                if (client.municipio)
-                    setMunicipio(client.municipio);
-            });
-    };
-
     useEffect(() => {
         if (selectedEstadoOption) {
+            const loadCities = (id) => {
+                let url = 'https://servicodados.ibge.gov.br/api/v1/';
+                url = url + `localidades/estados/${id}/municipios`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.sort((a, b) => a.nome.localeCompare(b.nome));
+                        setListCity([...data]);
+                        if (client.municipio)
+                            setMunicipio(client.municipio);
+                    });
+            };
+
             loadCities(selectedEstadoOption);
         }
-    }, [selectedEstadoOption]);
+    }, [selectedEstadoOption, setMunicipio, client.municipio]);
 
     useEffect(() => {
-        if (validated) {
-            // onHide();
+        if (closeModal) {
+            onHide();
         }
-    }, [validated]);
-
-    // useEffect(() => {
-    //     debugger;
-    //     if (client) {
-    //         //   const tarefasDb = localStorage['tarefas'];
-    //         //   const tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
-    //         //   const tarefa = tarefas.filter(
-    //         //     t => t.id === parseInt(props.id)
-    //         //   )[0];
-
-    //         values.nome = client.nome;
-    //         // setCarregarCliente(false);
-    //     }
-    // }, [client]);
-    // // const { isError, nome } = formEditState;
-
-    // useEffect(() => {
-    //     if (client) {
-    //         setValue([
-    //             { name: userData.name }, 
-    //             { phone: userData.phone }
-    //         ]);
-    //     }
-    // }, [client]);
-    // const {
-    //     register,
-    //     reset,
-    //     formState: { errors },
-    //     handleSubmit
-    // } = useForm({
-    //     defaultValues: client
-    // });
-
-    // const onSubmit = (data) => {
-    //     alert(JSON.stringify(data));
-    // };
-
+    }, [closeModal, onHide]);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+        } else {
+
+            // obtém as tarefas
+            const clientesDb = localStorage['clientes'];
+            let clientes = clientesDb ? JSON.parse(clientesDb) : [];
+            // persistir a tarefa atualizada
+            clientes = clientes.map(cli => {
+                if (cli.id === parseInt(client.id)) {
+                    cli.status = client.status;
+                    cli.nome = form.nome.value;
+                    cli.documento = form.documento.value;
+                    cli.telefone = form.telefone.value;
+                    cli.email = form.email.value;
+                    cli.endereco = form.endereco.value;
+                    cli.numero = form.numero.value;
+                    cli.complemento = form.complemento.value;
+                }
+                return cli;
+            });
+
+            localStorage['clientes'] = JSON.stringify(clientes);
+
+            // setCloseModal(true);
         }
 
         setValidated(true);
@@ -245,6 +158,7 @@ const ClienteEdit = ({ client, onHide, show, carregarCliente, ...rest }) => {
                                 <Form.Control
                                     required
                                     type="email"
+                                    name="email"
                                     className="form-control"
                                     defaultValue={client.email} />
 
@@ -262,9 +176,9 @@ const ClienteEdit = ({ client, onHide, show, carregarCliente, ...rest }) => {
                                 <InputMask
                                     required
                                     className="form-control"
-                                    name="telefone"
+                                    name="cep"
                                     mask="99999-999"
-                                    defaultValue={client.telefone} />
+                                    defaultValue={client.cep} />
 
                                 <Form.Control.Feedback type="invalid">
                                     <small>Deve ser preenchido um CEP.</small>
